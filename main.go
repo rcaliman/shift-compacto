@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"runtime"
 )
 
 type options struct {
@@ -66,7 +67,11 @@ func (r *remap) event(code uint16, value int32) []keyEvent {
 
 func main() {
 	var o options
-	flag.IntVar(&o.key, "key", 89, "Código da tecla /?")
+	defaultKey := 89
+	if runtime.GOOS == "windows" {
+		defaultKey = 115 // scan code 0x73 da tecla ABNT /?
+	}
+	flag.IntVar(&o.key, "key", defaultKey, "Código da tecla /? (Linux: 89; Windows ABNT: 115)")
 	flag.IntVar(&o.left, "left-shift", 42, "Código do Shift esquerdo")
 	flag.BoolVar(&o.list, "list", false, "Lista teclados físicos no Linux")
 	flag.BoolVar(&o.check, "check", false, "Linux: testa criação dos teclados virtuais sem capturar teclas")

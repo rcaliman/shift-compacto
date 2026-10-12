@@ -7,7 +7,7 @@ Versão independente do Python, para Linux e Windows de 64 bits (amd64 ou arm64)
 - Shift esquerdo (42) primeiro e depois 89: digita `?`, respeitando o layout do sistema.
 - Ctrl+C no terminal: encerra e libera as teclas virtuais.
 
-Aplica a todos os teclados físicos compatíveis, sem salvar configuração. Os códigos padrão são 89 e 42; ajuste com `--key` e `--left-shift` se necessário.
+Aplica a todos os teclados físicos compatíveis, sem salvar configuração. Os códigos padrão da tecla /? são 89 no Linux e 115 (0x73) no Windows ABNT; o Shift esquerdo usa 42. Ajuste com `--key` e `--left-shift` se necessário.
 
 ## Linux
 
@@ -48,6 +48,8 @@ Copie `shift-compacto.exe` (já compilado para Windows amd64) e execute em Power
 ```powershell
 .\shift-compacto.exe
 ```
+
+O Windows usa scan codes diferentes dos códigos do Linux: a tecla ABNT `/ ?` usa **115 (0x73)**. O executável seleciona esse padrão automaticamente. Se estiver usando uma versão antiga, teste ` .\shift-compacto.exe --key 115`. Para outros teclados, ajuste `--key` ao scan code da tecla desejada.
 
 Não precisa instalar Python, Go nem bibliotecas para executar o binário. Normalmente funciona sem administrador. Para atuar em aplicativos executados como administrador, abra o terminal do remapeador como administrador também.
 

@@ -2,7 +2,8 @@
 """Toque em 89 digita /; 89 + outra tecla funciona como Shift.
 Shift esquerdo + 89 preserva a tecla original para digitar ?.
 
-Windows: pip install keyboard
+Windows: tecla ABNT /? usa scan code 115 (0x73), não o código Linux 89.
+         pip install keyboard
 Linux (Fedora): sudo dnf install python3-evdev
          sudo /usr/bin/python3 ~/Projetos/shift-compacto/shift_compacto.py --list
          sudo /usr/bin/python3 ~/Projetos/shift-compacto/shift_compacto.py
@@ -209,7 +210,9 @@ def linux(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--key', type=int, default=89, help='Código da tecla /? (89).')
+    default_key = 115 if platform.system() == 'Windows' else 89
+    parser.add_argument('--key', type=int, default=default_key,
+                        help='Código da tecla /? (Linux: 89; Windows ABNT: 115).')
     parser.add_argument('--left-shift', type=int, default=42, help='Código do Shift esquerdo (42).')
     parser.add_argument('--list', action='store_true', help='Lista teclados físicos compatíveis no Linux.')
     parser.add_argument('--device', help='Restringe a um dispositivo no Linux (padrão: todos os teclados físicos).')
